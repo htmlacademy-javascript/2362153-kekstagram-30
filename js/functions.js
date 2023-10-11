@@ -1,24 +1,18 @@
 /**
+ *  Проверка длины строки
  * @param string
  * @param maxLength
  */
 
-// Проверка длины строки
-
-function stringLength(string, maxLength){
-  return string.length <= maxLength;
-}
-stringLength('qwert', 10);
+const isStringLength = (string, maxLength) => (string.length <= maxLength);
+isStringLength('qwert', 10);
 
 /**
- *
- * @param {*} string
- * @returns
+ *Проверка, является ли строка палиндромом
+ * @param {string} string
  */
 
-// Проверка, является ли строка палиндромом
-
-function Palindrome(string){
+const isPalindrome = (string) => {
   const stringToCheck = string.replaceAll(' ', '').toLowerCase();
   // метод 1 (более современный)
   // const stringReverse = [...stringToCheck].reverse().join('');
@@ -30,33 +24,46 @@ function Palindrome(string){
   }
 
   return stringToCheck === stringReverse;
-}
-Palindrome('довод');
+};
+
+isPalindrome('довод');
 
 /**
- *
+ *Проверка, есть ли в строке цифры
  * @param {*} chars
- * @returns
  */
 
-//Проверка, есть ли в строке цифры
+const isNumber = (chars) => {
+  // Метод 1
+  let result1 = '';
+  const string = chars.toString();
 
-function isNumber(chars){
+  for(let i = 0; i < string.length; i++) {
+    const char = parseInt(string[i], 10);
 
-  let result = 0;
-  const charsString = chars.replaceAll(' ', '');
-  const charsToChecked = [...charsString];
-
-  // Перебор каждого символа в строке
-  for(let i = 0; i < charsString.length; i++) {
-    const digit = parseInt(charsToChecked[i], 10);
-
-    // Проверка, является ли текущий символ цифрой
-    if (!isNaN(digit)) {
-      result = result * 10 + digit;
+    if(!Number.isNaN(char)){
+      result1 += string[i];
     }
   }
-  // Проверка наличия результата и его положительности
-  return result === 0 ? NaN : Math.abs(result);
-}
-isNumber('j- jjh67');
+  return result1;
+
+
+  // // Метод 2
+  // let result2 = 0;
+  // const charsString = chars.replaceAll(' ', '');
+  // const charsToChecked = [...charsString];
+
+  // // Перебор каждого символа в строке
+  // for(let i = 0; i < charsString.length; i++) {
+  //   const digit = parseInt(charsToChecked[i], 10);
+
+  //   // Проверка, является ли текущий символ цифрой
+  //   if (!isNaN(digit)) {
+  //     result2 = result2 * 10 + digit;
+  //   }
+  // }
+  // // Проверка наличия результата и его положительности
+  // return result2 === 0 ? NaN : Math.abs(result2);
+};
+
+isNumber('545ertert');
