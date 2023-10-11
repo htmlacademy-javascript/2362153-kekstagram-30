@@ -12,29 +12,51 @@ isStringLength('qwert', 10);
  * @param {string} string
  */
 
-const isPalindrome = (string) => {
+// метод 1 (более современный)
+const isPalindrome1 = (string) => {
   const stringToCheck = string.replaceAll(' ', '').toLowerCase();
-  // метод 1 (более современный)
-  // const stringReverse = [...stringToCheck].reverse().join('');
 
-  // метод 2 (согласно заданию академии)
+  const stringReverse = [...stringToCheck].reverse().join('');
+  return stringToCheck === stringReverse;
+};
+
+// метод 2 (согласно заданию академии)
+const isPalindrome2 = (string) => {
+  const stringToCheck = string.replaceAll(' ', '').toLowerCase();
   let stringReverse = '';
   for (let i = stringToCheck.length - 1; i >= 0; i--) {
     stringReverse += stringToCheck[i];
   }
-
   return stringToCheck === stringReverse;
 };
 
-isPalindrome('довод');
+// Метод 3 (из лайва)
+const isPalindrome3 = (string) => {
+  const stringToCheck = string.replaceAll(' ', '').toLowerCase();
+  const halfString = stringToCheck.length / 2;
+
+  for (let i = 0; i < halfString; i++) {
+    const firstChar = stringToCheck.at(i);
+    const lastChar = stringToCheck.at(-i - 1);
+    if(firstChar !== lastChar) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+isPalindrome1('довод');
+isPalindrome2('А роза упала на лапу АЗора');
+isPalindrome3('день рождения');
 
 /**
  *Проверка, есть ли в строке цифры
  * @param {*} chars
  */
 
-const isNumber = (chars) => {
-  // Метод 1
+// Метод 1
+const isNumber1 = (chars) => {
   let result1 = '';
   const string = chars.toString();
 
@@ -46,24 +68,27 @@ const isNumber = (chars) => {
     }
   }
   return result1;
-
-
-  // // Метод 2
-  // let result2 = 0;
-  // const charsString = chars.replaceAll(' ', '');
-  // const charsToChecked = [...charsString];
-
-  // // Перебор каждого символа в строке
-  // for(let i = 0; i < charsString.length; i++) {
-  //   const digit = parseInt(charsToChecked[i], 10);
-
-  //   // Проверка, является ли текущий символ цифрой
-  //   if (!isNaN(digit)) {
-  //     result2 = result2 * 10 + digit;
-  //   }
-  // }
-  // // Проверка наличия результата и его положительности
-  // return result2 === 0 ? NaN : Math.abs(result2);
 };
 
-isNumber('545ertert');
+// Метод 2
+const isNumber2 = (chars) => {
+
+  let result2 = 0;
+  const charsString = chars.replaceAll(' ', '');
+  const charsToChecked = [...charsString];
+
+  // Перебор каждого символа в строке
+  for(let i = 0; i < charsString.length; i++) {
+    const digit = parseInt(charsToChecked[i], 10);
+
+    // Проверка, является ли текущий символ цифрой
+    if (!isNaN(digit)) {
+      result2 = result2 * 10 + digit;
+    }
+  }
+  // Проверка наличия результата и его положительности
+  return result2 === 0 ? NaN : Math.abs(result2);
+};
+
+isNumber1('10october');
+isNumber2('10-10-1992');
