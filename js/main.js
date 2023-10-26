@@ -1,4 +1,4 @@
-import './util.js';
-import { getPictures } from './data.js';
+import './thumnails.js';
+// import { getPictures } from './mock.js';
 
-getPictures();
+// getPictures();
