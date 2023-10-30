@@ -1,4 +1,4 @@
-import './thumnails.js';
-// import { getPictures } from './mock.js';
+import {renderThumbnails} from './thumbnails.js';
+import { getPictures } from './mock.js';
 
-// getPictures();
+renderThumbnails(getPictures());
