@@ -1,5 +1,6 @@
-import { getTemplate, renderFew } from './util.js';
-import './render-comments.js'
+import { getTemplate } from './util.js';
+import './full-picture.js';
+import { openBigPicture } from './full-picture.js';
 
 const template = getTemplate('picture');
 const container = document.querySelector('.pictures');
@@ -17,63 +18,20 @@ const createThumbnail = (photo) => {
   //открытие миниатюры в полноэкранном режиме
 
   thumbnail.addEventListener('click', () => {
-    const bigPicture = document.querySelector('.big-picture');
-    bigPicture.classList.remove('hidden');
-
-    const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
-    bigPictureImg.src = photo.url;
-    bigPictureImg.alt = photo.alt;
-
-    bigPicture.querySelector('.likes-count').textContent = photo.likes;
-    bigPicture.querySelector('.social__caption').textContent = photo.description;
-
-    //добавление комментариев
-
-  const createComment = (comment) => {
-  const oneComment = document.createElement('li');
-  oneComment.className = 'social__comment';
-
-  const avatarOneComment = document.createElement('img');
-  avatarOneComment.className = 'social__picture';
-  avatarOneComment.src = comment.avatar;
-  avatarOneComment.alt = comment.name;
-  avatarOneComment.width = 35;
-  avatarOneComment.height = 35;
-
-  const textOneComment = document.createElement('p');
-  textOneComment.className = 'social__text';
-  textOneComment.textContent = comment.message;
-
-  oneComment.appendChild(avatarOneComment);
-  oneComment.appendChild(textOneComment);
-
-  return oneComment;
-};
-
-    const allComments = bigPicture.querySelector('.social__comments');
-    bigPicture.querySelector('.social__comment-shown-count').textContent = photo.comments.length.toString();
-    bigPicture.querySelector('.social__comment-total-count').textContent = photo.comments.length.toString();
-
-    allComments.innerHTML = '';
-    photo.comments.forEach(comment => {
-      const newComment = createComment(comment);
-      allComments.appendChild(newComment);
-    });
-
-    // закрытие большой картинки
-    const closeButton = bigPicture.querySelector('.big-picture__cancel');
-    closeButton.addEventListener('click', () => {
-      bigPicture.classList.add('hidden');
-    });
-    document.addEventListener('keydown', (evt) => {
-      if(evt.key === 'Escape') {
-        evt.preventDefault();
-        bigPicture.classList.add('hidden');
-      }
-    })
+    openBigPicture(photo);
   });
 
   return thumbnail;
 };
 
-export const renderThumbnails = (photos) => renderFew(photos, container, createThumbnail);
+const renderThumbnails = (photos) => {
+  const fragment = document.createDocumentFragment();
+  photos.forEach((photo) => {
+    const element = createThumbnail(photo);
+    fragment.appendChild(element);
+  });
+
+  container.appendChild(fragment);
+}
+
+export {renderThumbnails};
