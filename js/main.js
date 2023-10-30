@@ -1,4 +1,5 @@
-import './util.js';
-import { getPictures } from './data.js';
+import {renderThumbnails} from './thumbnails.js';
+import { getPictures } from './mock.js';
+// import './full-picture.js'
 
-getPictures();
+renderThumbnails(getPictures());

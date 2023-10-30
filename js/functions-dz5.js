@@ -33,7 +33,7 @@ const isDateInDay = (START_DAY, END_DAY, START_DATE, DURATION) => {
 const MINUTES_IN_HOUR = 60;
 
 const getMinutes = (time) =>{
-  const [hour, minutes] = startDay.split(':').map(Number);
+  const [hour, minutes] = time.split(':').map(Number);
   return hour * MINUTES_IN_HOUR + minutes;
 };
 
