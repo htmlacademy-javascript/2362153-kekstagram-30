@@ -44,6 +44,9 @@ const commentTotalCount = bigPicture.querySelector('.social__comment-total-count
       if (newComments.length <= 5) {
         commentLoader.classList.add('hidden');
       }
+      else if (newComments.length > 5) {
+        commentLoader.classList.remove('hidden');
+      }
 
         newComments.slice(0, 5).forEach((comment) => {
           const newCommentElement = createComment(comment);
@@ -56,13 +59,12 @@ const commentTotalCount = bigPicture.querySelector('.social__comment-total-count
   };
 
   const renderComments = (comments) => {
-    const commentsLoader = bigPicture.querySelector('.social__comments-loader');
+    const commentLoader = bigPicture.querySelector('.social__comments-loader');
     commentTotalCount.textContent = comments.length.toString();
     allComments.innerHTML = '';
 
     const addNewComment = addComments(comments);
-    commentsLoader.classList.remove('hidden');
-
+    commentLoader.classList.remove('hidden');
     addNewComment();
 
     commentLoader.addEventListener('click', addNewComment);
