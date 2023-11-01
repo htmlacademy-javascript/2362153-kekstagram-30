@@ -1,3 +1,10 @@
+const bigPicture = document.querySelector('.big-picture');
+
+/**
+ *
+ * @param {HTMLAnchorElement} comment
+ */
+
 const createComment = (comment) => {
   const oneComment = document.createElement('li');
   oneComment.className = 'social__comment';
@@ -21,10 +28,14 @@ const createComment = (comment) => {
 
 // добавление комментариев
 
-const commentLoader = document.querySelector('.social__comments-loader');
-const allComments = document.querySelector('.social__comments');
-const commentShownCount = document.querySelector('.social__comment-shown-count');
-const commentTotalCount = document.querySelector('.social__comment-total-count');
+const commentLoader = bigPicture.querySelector('.social__comments-loader');
+const allComments = bigPicture.querySelector('.social__comments');
+const commentShownCount = bigPicture.querySelector('.social__comment-shown-count');
+const commentTotalCount = bigPicture.querySelector('.social__comment-total-count');
+/**
+ *
+ * @param {Array} comments
+ */
 
   const addComments = (comments) => {
     let newComments = comments;
@@ -40,12 +51,12 @@ const commentTotalCount = document.querySelector('.social__comment-total-count')
         });
         newComments = newComments.slice(5);
 
-        commentShownCount.textContent = document.querySelectorAll('.social__comment').length.toString();
+        commentShownCount.textContent = bigPicture.querySelectorAll('.social__comment').length.toString();
     };
   };
 
   const renderComments = (comments) => {
-    const commentsLoader = document.querySelector('.social__comments-loader');
+    const commentsLoader = bigPicture.querySelector('.social__comments-loader');
     commentTotalCount.textContent = comments.length.toString();
     allComments.innerHTML = '';
 
@@ -57,4 +68,4 @@ const commentTotalCount = document.querySelector('.social__comment-total-count')
     commentLoader.addEventListener('click', addNewComment);
   };
 
-export { renderComments };
+export { renderComments, bigPicture };
