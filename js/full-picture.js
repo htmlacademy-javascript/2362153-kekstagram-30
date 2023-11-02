@@ -1,25 +1,29 @@
-import { renderComments, bigPicture } from "./render-comments";
+import { renderComments, bigPicture } from './render-comments';
+
 
 const body = document.querySelector('body');
+
+const closeButton = document.querySelector('.big-picture__cancel');
+closeButton.addEventListener('click', onCloseBigPicture);
 
 // закрытие большой картинки
 
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    closeBigPicture();
+    onCloseBigPicture();
   }
 };
 
-const closeBigPicture = () => {
+function onCloseBigPicture() {
   bigPicture.classList.add('hidden');
   body.classList.remove('.modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-};
+}
 
 //открытие миниатюры в полноэкранном режиме
 
-const openBigPicture = (photo) => {
+const onOpenBigPicture = (photo) => {
   body.classList.add('.modal-open');
   bigPicture.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
@@ -34,4 +38,4 @@ const openBigPicture = (photo) => {
   renderComments(photo.comments);
 };
 
-export { openBigPicture, closeBigPicture };
+export { onOpenBigPicture };

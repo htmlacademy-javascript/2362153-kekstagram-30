@@ -1,8 +1,17 @@
+import { renderFew } from './util';
+
+const PACK_SIZE = 5;
+
 const bigPicture = document.querySelector('.big-picture');
+const loaderButton = bigPicture.querySelector('.social__comments-loader');
+const list = bigPicture.querySelector('.social__comments');
+const shownCount = bigPicture.querySelector('.social__comment-shown-count');
+const totalCount = bigPicture.querySelector('.social__comment-total-count');
+let allComments = [];
 
 /**
  *
- * @param {HTMLAnchorElement} comment
+ * @param {Object} comment
  */
 
 const createComment = (comment) => {
@@ -28,46 +37,33 @@ const createComment = (comment) => {
 
 // добавление комментариев
 
-const commentLoader = bigPicture.querySelector('.social__comments-loader');
-const allComments = bigPicture.querySelector('.social__comments');
-const commentShownCount = bigPicture.querySelector('.social__comment-shown-count');
-const commentTotalCount = bigPicture.querySelector('.social__comment-total-count');
+const addNextComments = () => {
+  const currentShowedAmount = list.childElementCount;
+  let nextShowedAmount = currentShowedAmount + PACK_SIZE;
+
+  const isAllWillBeShown = nextShowedAmount >= allComments.length;
+  nextShowedAmount = isAllWillBeShown ? allComments.length : nextShowedAmount;
+  const showComments = allComments.slice(currentShowedAmount, nextShowedAmount);
+
+  renderFew(showComments, list, createComment);
+
+  shownCount.textContent = nextShowedAmount.toString();
+
+  loaderButton.classList.toggle('hidden', nextShowedAmount >= allComments.length);
+};
+
+loaderButton.addEventListener('click', addNextComments);
+
 /**
  *
  * @param {Array} comments
  */
 
-  const addComments = (comments) => {
-    let newComments = comments;
-
-    return () => {
-      if (newComments.length <= 5) {
-        commentLoader.classList.add('hidden');
-      }
-      else if (newComments.length > 5) {
-        commentLoader.classList.remove('hidden');
-      }
-
-        newComments.slice(0, 5).forEach((comment) => {
-          const newCommentElement = createComment(comment);
-          allComments.appendChild(newCommentElement);
-        });
-        newComments = newComments.slice(5);
-
-        commentShownCount.textContent = bigPicture.querySelectorAll('.social__comment').length.toString();
-    };
-  };
-
-  const renderComments = (comments) => {
-    const commentLoader = bigPicture.querySelector('.social__comments-loader');
-    commentTotalCount.textContent = comments.length.toString();
-    allComments.innerHTML = '';
-
-    const addNewComment = addComments(comments);
-    commentLoader.classList.remove('hidden');
-    addNewComment();
-
-    commentLoader.addEventListener('click', addNewComment);
-  };
+const renderComments = (comments) => {
+  allComments = comments;
+  totalCount.textContent = comments.length.toString();
+  list.innerHTML = '';
+  addNextComments();
+};
 
 export { renderComments, bigPicture };
