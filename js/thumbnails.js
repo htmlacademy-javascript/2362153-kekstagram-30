@@ -1,12 +1,11 @@
-import { getTemplate } from './util.js';
-import { openBigPicture, closeBigPicture } from './full-picture.js';
+import { getTemplate, renderFew } from './util.js';
+import { onOpenBigPicture } from './full-picture.js';
 
 const template = getTemplate('picture');
 const container = document.querySelector('.pictures');
-const closeButton = document.querySelector('.big-picture__cancel');
 
 const createThumbnail = (photo) => {
-/** @type {HTMLAnchorElement} */
+  /** @type {HTMLAnchorElement} */
 
   const thumbnail = template.cloneNode(true);
   const img = thumbnail.querySelector('.picture__img');
@@ -19,9 +18,7 @@ const createThumbnail = (photo) => {
   //открытие миниатюры в полноэкранном режиме
 
   thumbnail.addEventListener('click', () => {
-    openBigPicture(photo);
-
-    closeButton.addEventListener('click', closeBigPicture);
+    onOpenBigPicture(photo);
   });
 
   return thumbnail;
@@ -31,16 +28,6 @@ const createThumbnail = (photo) => {
  *
  * @param {Array} photos
  */
+const renderThumbnails = (photos) => renderFew (photos, container, createThumbnail);
 
-const renderThumbnails = (photos) => {
-  const fragment = document.createDocumentFragment();
-  photos.forEach((photo) => {
-    const element = createThumbnail(photo);
-    fragment.appendChild(element);
-
-  });
-
-  container.appendChild(fragment);
-}
-
-export {renderThumbnails};
+export { renderThumbnails };
