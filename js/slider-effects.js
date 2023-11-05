@@ -34,6 +34,9 @@ list.addEventListener('change', (evt) => {
     changeFilter();
   });
 
+  if (valueTarget === 'none') {
+    slider.classList('hidden');
+  }
   if (valueTarget === 'chrome' || valueTarget === 'sepia') {
     slider.noUiSlider.on('update', () => {
       changeFilter(slider.noUiSlider.get());
