@@ -7,7 +7,7 @@ const scaleBiggerButton = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
 const img = document.querySelector('.img-upload__preview img');
 
-const getValue = () => Number(scaleControlValue.getAttribute('value').slice(0, -1));
+const getValue = () => parseInt(scaleControlValue.value, 10);
 
 const changeImg = (value) => {
   scaleControlValue.setAttribute('value', `${value}%`);
@@ -16,22 +16,18 @@ const changeImg = (value) => {
 
 const onScaleSmallerClick = () => {
   const value = getValue();
+  let nextValue = value - STEP;
+  nextValue = nextValue < MIN_VALUE ? MIN_VALUE : nextValue;
 
-  if (value - STEP <= MIN_VALUE) {
-    changeImg(MIN_VALUE);
-  } else {
-    changeImg(value - STEP);
-  }
+  changeImg(nextValue);
 };
 
 const onScaleBiggerClick = () => {
   const value = getValue();
+  let nextValue = value - STEP;
+  nextValue = nextValue > MAX_VALUE ? MAX_VALUE : nextValue;
 
-  if (value + STEP >= MAX_VALUE) {
-    changeImg(MAX_VALUE);
-  } else {
-    changeImg(value + STEP);
-  }
+  changeImg(nextValue);
 };
 
 scaleSmallerButton.addEventListener('click', onScaleSmallerClick);

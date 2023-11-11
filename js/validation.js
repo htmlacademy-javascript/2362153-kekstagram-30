@@ -1,3 +1,5 @@
+import Pristine from 'pristinejs';
+
 const uploadForm = document.querySelector('.img-upload__form');
 const hashtags = uploadForm.querySelector('.text__hashtags');
 const description = uploadForm.querySelector('.text__description');
@@ -18,7 +20,7 @@ const hashtagDefault = {
   HASH_ONLY_ERR: 'Хэштег должен быть длиннее #'
 };
 
-const regex = /^#[a-zа-яё0-9]{1, 19}$/;
+const REG_EX = /^#[a-zа-яё0-9]{1,19}$/;
 
 const isUniqueArray = (array) => new Set(array).size === array.length;
 
@@ -64,7 +66,7 @@ const validateHashtags = (value) => {
       return false;
     }
 
-    if (!regex.test(tag)) {
+    if (!REG_EX.test(tag)) {
       hashtagsError = hashtagDefault.HASH_REGEX_ERR;
       return false;
     }
@@ -82,5 +84,11 @@ pristine.addValidator(
 
 const validate = () => pristine.validate();
 const resetValidation = () => pristine.reset();
+
+uploadForm.addEventListener('submit', (evt) => {
+  if(!pristine.validate()) {
+    evt.preventDefault();
+  }
+});
 
 export { validate, resetValidation, uploadForm, hashtags, description};

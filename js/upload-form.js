@@ -1,4 +1,5 @@
-import { uploadForm, hashtags, description, validate } from './validation';
+
+import { uploadForm, hashtags, description } from './validation';
 
 const imgEdit = uploadForm.querySelector('.img-upload__overlay');
 const imgInput = uploadForm.querySelector('.img-upload__input');
@@ -29,13 +30,6 @@ function onDocumentKeydown(evt) {
     }
   }
 }
-
-
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  validate();
-});
-
 
 imgInput.addEventListener('change', onOpenImgEdit);
 uploadForm.addEventListener('reset', onCloseImgEdit);
