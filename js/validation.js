@@ -85,10 +85,4 @@ pristine.addValidator(
 const validate = () => pristine.validate();
 const resetValidation = () => pristine.reset();
 
-uploadForm.addEventListener('submit', (evt) => {
-  if(!pristine.validate()) {
-    evt.preventDefault();
-  }
-});
-
-export { validate, resetValidation, uploadForm, hashtags, description};
+export { validate, resetValidation, uploadForm, hashtags, description };

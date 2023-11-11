@@ -1,5 +1,6 @@
 
-import { uploadForm, hashtags, description } from './validation';
+import { resetScale } from './scale-img';
+import { uploadForm, hashtags, description, pristine, resetValidation } from './validation';
 
 const imgEdit = uploadForm.querySelector('.img-upload__overlay');
 const imgInput = uploadForm.querySelector('.img-upload__input');
@@ -30,6 +31,14 @@ function onDocumentKeydown(evt) {
     }
   }
 }
+
+uploadForm.addEventListener('submit', (evt) => {
+  if(!pristine.validate()) {
+    evt.preventDefault();
+    resetScale();
+    resetValidation();
+  }
+});
 
 imgInput.addEventListener('change', onOpenImgEdit);
 uploadForm.addEventListener('reset', onCloseImgEdit);
