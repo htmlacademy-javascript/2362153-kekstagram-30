@@ -1,3 +1,4 @@
+
 /**
  *
  * @param {string} templateId
@@ -26,7 +27,8 @@ export const renderFew = (items, container, markUp) => {
 };
 
 const REMOVE_MESSAGE_TIMEOUT = 4000;
-const errorMessage = document.querySelector('#data-error').content.querySelector('.data-error');
+
+const errorMessage = getTemplate('data-error');
 
 function showError() {
   const error = errorMessage.cloneNode(true);
