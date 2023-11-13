@@ -3,6 +3,7 @@ import Pristine from 'pristinejs';
 const uploadForm = document.querySelector('.img-upload__form');
 const hashtags = uploadForm.querySelector('.text__hashtags');
 const description = uploadForm.querySelector('.text__description');
+const submitButton = uploadForm.querySelector('.img-upload__submit');
 
 const descriptionDefault = {
   MAX_LENGTH: 140,
@@ -20,9 +21,19 @@ const hashtagDefault = {
   HASH_ONLY_ERR: 'Хэштег должен быть длиннее #'
 };
 
+const submitButtonCaption = {
+  SUBMITTING: 'Отправляю...',
+  IDLE: 'Опубликовать',
+};
+
 const REG_EX = /^#[a-zа-яё0-9]{1,19}$/;
 
 const isUniqueArray = (array) => new Set(array).size === array.length;
+
+export const toggleSubmitButton = (isDisabled) => {
+  submitButton.disabled = isDisabled;
+  submitButton.textContent = isDisabled ? submitButtonCaption.SUBMITTING : submitButtonCaption.IDLE;
+};
 
 
 export const pristine = new Pristine(uploadForm, {

@@ -1,22 +1,10 @@
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-const getRandomArrayElement = (elements) =>
-  elements[getRandomInteger(0, elements.length - 1)];
-
-export { getRandomInteger, getRandomArrayElement };
-
 /**
  *
  * @param {string} templateId
  */
 
 export const getTemplate = (templateId) => {
-  const template = document.querySelector(`#${templateId}`)?.content.firstElementChild;
+  const template = document.querySelector(`#${templateId}`).content.firstElementChild;
   return template.cloneNode(true);
 };
 
@@ -36,3 +24,17 @@ export const renderFew = (items, container, markUp) => {
 
   container.appendChild(fragment);
 };
+
+const REMOVE_MESSAGE_TIMEOUT = 4000;
+const errorMessage = document.querySelector('#data-error').content.querySelector('.data-error');
+
+function showError() {
+  const error = errorMessage.cloneNode(true);
+  document.body.append(error);
+
+  setTimeout(() => {
+    error.remove();
+  }, REMOVE_MESSAGE_TIMEOUT);
+}
+
+export { showError };
