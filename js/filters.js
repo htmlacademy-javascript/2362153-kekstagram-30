@@ -37,35 +37,42 @@ const filterDiscussedPicture = (pictures) => {
 
 export const ShowFilter = () => imgFilter.classList.remove('img-filters--inactive');
 
+const renderedFilterDefault = debounce((pictures) => {
+  const allPictures = container.querySelectorAll('a');
+  allPictures.forEach((child) => container.removeChild(child));
+  renderThumbnails(pictures);
+}, RERENDER_DELAY);
+
+const renderedFilterRandom = debounce((pictures) => {
+  const allPictures = container.querySelectorAll('a');
+  allPictures.forEach((child) => container.removeChild(child));
+  filterRandomPictures(pictures);
+  renderThumbnails(pictures.slice(1, 10));
+}, RERENDER_DELAY);
+
+const renderedFilterDiscussed = debounce((pictures) => {
+  const allPictures = container.querySelectorAll('a');
+  allPictures.forEach((child) => container.removeChild(child));
+  renderThumbnails(filterDiscussedPicture(pictures));
+}, RERENDER_DELAY);
+
 export const onFilterDefaultClick = (pictures) => {
-  filterDefault.addEventListener('click', debounce(() => {
+  filterDefault.addEventListener('click', () => {
     onButtonsFiltersClick();
-    const allPictures = container.querySelectorAll('a');
-    allPictures.forEach((child) => container.removeChild(child));
-    renderThumbnails(pictures);
-  }, RERENDER_DELAY,)
-  );
+    renderedFilterDefault(pictures);
+  });
 };
 
 export const onFilterRandomClick = (pictures) => {
-  filterRandom.addEventListener('click', debounce(() => {
+  filterRandom.addEventListener('click', () => {
     onButtonsFiltersClick();
-
-    const allPictures = container.querySelectorAll('a');
-    allPictures.forEach((child) => container.removeChild(child));
-    filterRandomPictures(pictures);
-    renderThumbnails(pictures.slice(1, 10));
-  }, RERENDER_DELAY,)
-  );
+    renderedFilterRandom(pictures);
+  });
 };
 
 export const onFilterDiscussedClick = (pictures) => {
-  filterDiscussed.addEventListener('click', debounce(() => {
+  filterDiscussed.addEventListener('click', () => {
     onButtonsFiltersClick();
-
-    const allPictures = container.querySelectorAll('a');
-    allPictures.forEach((child) => container.removeChild(child));
-    renderThumbnails(filterDiscussedPicture(pictures));
-  }, RERENDER_DELAY,)
-  );
+    renderedFilterDiscussed(pictures);
+  });
 };

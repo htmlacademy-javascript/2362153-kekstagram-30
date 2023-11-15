@@ -52,6 +52,10 @@ let hashtagsError = '';
 const validateHashtags = (value) => {
   const tags = value.trim().toLowerCase().split(/\s*(?=#)/);
 
+  if (value === '') {
+    return true;
+  }
+
   if (tags.length > hashtagDefault.MAX_COUNT) {
     hashtagsError = hashtagDefault.HASH_COUNT_ERR;
     return false;
@@ -70,6 +74,7 @@ const validateHashtags = (value) => {
 
     if (tag.length > hashtagDefault.MAX_SIMBOLS) {
       hashtagsError = hashtagDefault.HASH_SIMBOLS_ERR;
+      return false;
     }
 
     if (tag === '#') {
