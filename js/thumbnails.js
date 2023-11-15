@@ -28,6 +28,8 @@ const createThumbnail = (photo) => {
  *
  * @param {Array} photos
  */
-const renderThumbnails = (photos) => renderFew(photos, container, createThumbnail);
+const renderThumbnails = (photos) => {
+  renderFew(photos, container, createThumbnail);
+};
 
-export { renderThumbnails };
+export { renderThumbnails, container };
