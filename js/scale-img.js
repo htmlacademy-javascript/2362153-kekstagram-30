@@ -17,15 +17,15 @@ const changeImg = (value) => {
 const onScaleSmallerClick = () => {
   const value = getValue();
   let nextValue = value - STEP;
-  nextValue = nextValue < MIN_VALUE ? MIN_VALUE : nextValue;
+  nextValue = (nextValue < MIN_VALUE ? MIN_VALUE : nextValue);
 
   changeImg(nextValue);
 };
 
 const onScaleBiggerClick = () => {
   const value = getValue();
-  let nextValue = value - STEP;
-  nextValue = nextValue > MAX_VALUE ? MAX_VALUE : nextValue;
+  let nextValue = value + STEP;
+  nextValue = (nextValue > MAX_VALUE ? MAX_VALUE : nextValue);
 
   changeImg(nextValue);
 };

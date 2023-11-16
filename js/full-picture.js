@@ -24,7 +24,7 @@ function onCloseBigPicture() {
 //открытие миниатюры в полноэкранном режиме
 
 const onOpenBigPicture = (photo) => {
-  body.classList.add('.modal-open');
+  body.classList.add('modal-open');
   bigPicture.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
 
