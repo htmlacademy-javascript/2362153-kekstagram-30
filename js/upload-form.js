@@ -33,7 +33,7 @@ const isErrorExists = () => Boolean(document.querySelector('.error'));
 
 function onDocumentKeydown(evt) {
   if (!(hashtags === document.activeElement || description === document.activeElement)) {
-    if (evt.key === 'Escape' && !isErrorExists) {
+    if (evt.key === 'Escape' && !isErrorExists()) {
       evt.preventDefault();
       closeForm();
     }
