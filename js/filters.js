@@ -1,71 +1,63 @@
-import { container, renderThumbnails } from './thumbnails.js';
+import { renderThumbnails } from './thumbnails.js';
 import { debounce } from './util.js';
 
 const imgFilter = document.querySelector('.img-filters');
-const filterDefault = document.querySelector('#filter-default');
-const filterRandom = document.querySelector('#filter-random');
-const filterDiscussed = document.querySelector('#filter-discussed');
+const filterForm = document.querySelector('.img-filters__form');
+const defaultButton = imgFilter.querySelector('#filter-default');
+const randomButton = imgFilter.querySelector('#filter-random');
+const discussedButton = imgFilter.querySelector('#filter-discussed');
 const RERENDER_DELAY = 500;
+const MAX_RANDOM_FILTER = 10;
 
-const buttonsFilters = document.querySelectorAll('.img-filters__button');
+const filterEnum = {
+  DEFAULT: 'default',
+  RANDOM: 'random',
+  DISCUSSED: 'discussed',
+};
 
-const onButtonsFiltersClick = () => {
-  for (const button of buttonsFilters) {
-    button.addEventListener('click', function () {
-      buttonsFilters.forEach((i) => i.classList.remove('img-filters__button--active'));
-      this.classList.toggle('img-filters__button--active');
-    });
+const getRandomIndex = (min, max) => Math.floor(Math.random() * (max - min + 1));
+
+const filterHandlers = {
+  [filterEnum.DEFAULT]: (data) => data,
+  [filterEnum.RANDOM]: (data) => {
+    const randomIndexList = [];
+    const max = Math.min(MAX_RANDOM_FILTER, data.length);
+    while (randomIndexList.length < max) {
+      const index = getRandomIndex(0, data.length);
+      if (!randomIndexList.includes(index)) {
+        randomIndexList.push(index);
+      }
+    }
+    return randomIndexList.map((index) => data[index]);
+  },
+  [filterEnum.DISCUSSED]: (data) => [...data].sort((item1, item2) => item2.comments.length - item1.comments.length)
+};
+
+let currentFilter = filterEnum.DEFAULT;
+
+const reRender = (evt, filter, data) => {
+  if (currentFilter !== filter) {
+    const filteredData = filterHandlers[filter](data);
+    const pictures = document.querySelectorAll('.picture');
+    pictures.forEach((item) => item.remove());
+    renderThumbnails(filteredData);
+    const currentActive = filterForm.querySelector('.img-filters__button--active');
+    currentActive.classList.remove('img-filters__button--active');
+    evt.target.classList.add('img-filters__button--active');
+    currentFilter = filter;
   }
 };
+const debounceReRender = debounce(reRender, RERENDER_DELAY);
 
-/**
-*
-* @param {Array} pictures
-*/
-const filterRandomPictures = (pictures) => {
-  pictures.sort(() => Math.random() - 0.5);
-};
-
-const filterDiscussedPicture = (pictures) => {
-  const arrayCommentsLengths = [];
-  for (let i = 0; i < pictures.length; i++) {
-    arrayCommentsLengths.push(pictures[i]);
-  }
-  arrayCommentsLengths.sort((a, b) => b.comments.length - a.comments.length);
-  return arrayCommentsLengths;
-};
-
-export const ShowFilter = () => imgFilter.classList.remove('img-filters--inactive');
-
-export const onFilterDefaultClick = (pictures) => {
-  filterDefault.addEventListener('click', debounce(() => {
-    onButtonsFiltersClick();
-    const allPictures = container.querySelectorAll('a');
-    allPictures.forEach((child) => container.removeChild(child));
-    renderThumbnails(pictures);
-  }, RERENDER_DELAY,)
-  );
-};
-
-export const onFilterRandomClick = (pictures) => {
-  filterRandom.addEventListener('click', debounce(() => {
-    onButtonsFiltersClick();
-
-    const allPictures = container.querySelectorAll('a');
-    allPictures.forEach((child) => container.removeChild(child));
-    filterRandomPictures(pictures);
-    renderThumbnails(pictures.slice(1, 10));
-  }, RERENDER_DELAY,)
-  );
-};
-
-export const onFilterDiscussedClick = (pictures) => {
-  filterDiscussed.addEventListener('click', debounce(() => {
-    onButtonsFiltersClick();
-
-    const allPictures = container.querySelectorAll('a');
-    allPictures.forEach((child) => container.removeChild(child));
-    renderThumbnails(filterDiscussedPicture(pictures));
-  }, RERENDER_DELAY,)
-  );
+export const showFilter = (data) => {
+  imgFilter.classList.remove('img-filters--inactive');
+  defaultButton.addEventListener('click', (evt) => {
+    debounceReRender(evt, filterEnum.DEFAULT, data);
+  });
+  randomButton.addEventListener('click', (evt) => {
+    debounceReRender(evt, filterEnum.RANDOM, data);
+  });
+  discussedButton.addEventListener('click', (evt) => {
+    debounceReRender(evt, filterEnum.DISCUSSED, data);
+  });
 };
