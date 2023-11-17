@@ -6,6 +6,7 @@ import './slider-effects.js';
 import { loadPictures } from './api.js';
 import { showError } from './util.js';
 import { showFilter } from './filters.js';
+// import { initThumbnailsSorting } from './filters2.js';
 
 async function bootstrap() {
   try {

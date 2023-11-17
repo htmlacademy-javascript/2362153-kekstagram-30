@@ -10,7 +10,7 @@ const createThumbnail = (photo) => {
   const thumbnail = template.cloneNode(true);
   const img = thumbnail.querySelector('.picture__img');
   img.src = photo.url;
-  img.alt = photo.alt;
+  img.alt = photo.description;
 
   thumbnail.querySelector('.picture__likes').textContent = photo.likes;
   thumbnail.querySelector('.picture__comments').textContent = photo.comments.length;

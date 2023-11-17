@@ -17,7 +17,7 @@ const onDocumentKeydown = (evt) => {
 
 function onCloseBigPicture() {
   bigPicture.classList.add('hidden');
-  body.classList.remove('.modal-open');
+  body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
@@ -30,7 +30,7 @@ const onOpenBigPicture = (photo) => {
 
   const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
   bigPictureImg.src = photo.url;
-  bigPictureImg.alt = photo.alt;
+  bigPictureImg.set = photo.alt;
 
   bigPicture.querySelector('.likes-count').textContent = photo.likes;
   bigPicture.querySelector('.social__caption').textContent = photo.description;
