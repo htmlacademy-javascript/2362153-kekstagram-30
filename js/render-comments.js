@@ -35,8 +35,6 @@ const createComment = (comment) => {
   return oneComment;
 };
 
-// добавление комментариев
-
 const addNextComments = () => {
   const currentShowedAmount = list.childElementCount;
   let nextShowedAmount = currentShowedAmount + PACK_SIZE;
