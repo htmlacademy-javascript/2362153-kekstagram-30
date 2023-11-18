@@ -15,28 +15,19 @@ const filterEnum = {
   DISCUSSED: 'discussed',
 };
 
-const getRandomIndex = (min, max) => Math.floor(Math.random() * (max - min + 1));
-
 const filterHandlers = {
   [filterEnum.DEFAULT]: (data) => data,
   [filterEnum.RANDOM]: (data) => {
-    const randomIndexList = [];
-    const max = Math.min(MAX_RANDOM_FILTER, data.length);
-    while (randomIndexList.length < max) {
-      const index = getRandomIndex(0, data.length);
-      if (!randomIndexList.includes(index)) {
-        randomIndexList.push(index);
-      }
-    }
-    return randomIndexList.map((index) => data[index]);
+    const randomData = data.sort(() => Math.random() - 0.5).slice(0, MAX_RANDOM_FILTER);
+    return randomData;
   },
   [filterEnum.DISCUSSED]: (data) => [...data].sort((item1, item2) => item2.comments.length - item1.comments.length)
 };
 
-const sortedButtons = (target) => {
+const sortedButtons = (evt) => {
   const currentActive = filterForm.querySelector('.img-filters__button--active');
   currentActive.classList.remove('img-filters__button--active');
-  target.classList.add('img-filters__button--active');
+  evt.target.classList.add('img-filters__button--active');
 };
 
 const clearContainer = () => {
@@ -54,9 +45,9 @@ const debounceReRender = debounce(reRender, RERENDER_DELAY);
 
 export const showFilter = (data) => {
   imgFilter.classList.remove('img-filters--inactive');
-  filterForm.addEventListener('click', (evt) =>{
+  filterForm.addEventListener('click', (evt) => {
     const target = evt.target;
-    sortedButtons(target);
+    sortedButtons(evt);
 
     if (target === defaultButton) {
       debounceReRender(filterEnum.DEFAULT, data);
