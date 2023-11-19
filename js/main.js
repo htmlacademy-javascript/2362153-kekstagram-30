@@ -1,4 +1,4 @@
-import { renderThumbnails } from './thumbnails.js';
+import { renderThumbnails } from './render-thumbnails.js';
 import './new-img.js';
 import './upload-form.js';
 import './scale-img.js';

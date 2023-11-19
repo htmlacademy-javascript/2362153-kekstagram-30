@@ -4,10 +4,11 @@ import noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
 import { EFFECT_OPTION } from './effect-map';
 
+const CHANGE_EVENT = new Event('change');
+
 const sliderLine = document.querySelector('.effect-level__slider');
 const effectList = document.querySelector('.effects__list');
 const sliderEffect = document.querySelector('.img-upload__effect-level');
-const CHANGE_EVENT = new Event('change');
 
 const slider = noUiSlider.create(sliderLine, EFFECT_OPTION.none.slider);
 
@@ -22,7 +23,7 @@ effectList.addEventListener('change', () => {
 });
 
 slider.on('update', () => {
-  const value = slider.get();
+  const value = Number(slider.get());
   uploadForm['effect-level'].value = String(value);
 
   const currentEffect = uploadForm.effect.value;

@@ -7,12 +7,8 @@ const loaderButton = bigPicture.querySelector('.social__comments-loader');
 const list = bigPicture.querySelector('.social__comments');
 const shownCount = bigPicture.querySelector('.social__comment-shown-count');
 const totalCount = bigPicture.querySelector('.social__comment-total-count');
-let allComments = [];
 
-/**
- *
- * @param {Object} comment
- */
+let allComments = [];
 
 const createComment = (comment) => {
   const oneComment = document.createElement('li');
@@ -35,8 +31,6 @@ const createComment = (comment) => {
   return oneComment;
 };
 
-// добавление комментариев
-
 const addNextComments = () => {
   const currentShowedAmount = list.childElementCount;
   let nextShowedAmount = currentShowedAmount + PACK_SIZE;
@@ -53,11 +47,6 @@ const addNextComments = () => {
 };
 
 loaderButton.addEventListener('click', addNextComments);
-
-/**
- *
- * @param {Array} comments
- */
 
 const renderComments = (comments) => {
   allComments = comments;

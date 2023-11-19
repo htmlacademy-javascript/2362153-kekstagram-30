@@ -3,15 +3,10 @@ import { resetScale } from './scale-img';
 import { uploadForm, hashtags, description, pristine, resetValidation, toggleSubmitButton } from './validation';
 import { sendPictures } from './api';
 import { resetEffect } from './slider-effects';
-import { showErrorMessage, showSuccessMessage } from './message';
+import { showErrorMessage, showSuccessMessage } from './messages';
 
 const imgEdit = uploadForm.querySelector('.img-upload__overlay');
 const imgInput = uploadForm.querySelector('.img-upload__input');
-
-const toggle = (isOpen = true) => {
-  imgEdit.classList.toggle('hidden', !isOpen);
-  document.body.classList.toggle('modal-open', isOpen);
-};
 
 const closeForm = () => {
   uploadForm.reset();
@@ -21,14 +16,17 @@ const closeForm = () => {
 };
 
 const onCloseImgEdit = () => {
-  toggle(false);
+  imgEdit.classList.add('hidden');
+  document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
 const onOpenImgEdit = () => {
-  toggle();
+  imgEdit.classList.remove('hidden');
+  document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
+
 const isErrorExists = () => Boolean(document.querySelector('.error'));
 
 function onDocumentKeydown(evt) {

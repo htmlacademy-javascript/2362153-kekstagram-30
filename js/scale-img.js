@@ -33,6 +33,6 @@ const onScaleBiggerClick = () => {
 scaleSmallerButton.addEventListener('click', onScaleSmallerClick);
 scaleBiggerButton.addEventListener('click', onScaleBiggerClick);
 
-export const resetScale = () => img.style.removeProperty('transform');
+export const resetScale = () => changeImg(100);
 
 export { img };
