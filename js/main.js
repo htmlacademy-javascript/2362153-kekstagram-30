@@ -7,7 +7,7 @@ import { loadPictures } from './api.js';
 import { showError } from './util.js';
 import { showFilter } from './filters.js';
 
-async function bootstrap() {
+const bootstrap = async () => {
   try {
     const pictures = await loadPictures();
     renderThumbnails(pictures);
@@ -15,6 +15,6 @@ async function bootstrap() {
   } catch {
     showError();
   }
-}
+};
 
 bootstrap();
