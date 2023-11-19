@@ -1,33 +1,37 @@
-import { renderThumbnails } from './thumbnails.js';
+import { renderThumbnails } from './render-thumbnails.js';
 import { debounce } from './util.js';
+
+const MAX_RANDOM_FILTER = 10;
+const RERENDER_DELAY = 500;
+const ACTIVE_CLASS = 'img-filters__button--active';
+
+const FilterEnum = {
+  DEFAULT: 'default',
+  RANDOM: 'random',
+  DISCUSSED: 'discussed',
+};
+
+const FilterHandlers = {
+  [FilterEnum.DEFAULT]: (data) => data,
+  [FilterEnum.RANDOM]: (data) => {
+    const randomData = data.sort(() => Math.random() - 0.5).slice(0, MAX_RANDOM_FILTER);
+    return randomData;
+  },
+  [FilterEnum.DISCUSSED]: (data) => [...data].sort((item1, item2) => item2.comments.length - item1.comments.length)
+};
 
 const imgFilter = document.querySelector('.img-filters');
 const filterForm = document.querySelector('.img-filters__form');
 const defaultButton = imgFilter.querySelector('#filter-default');
 const randomButton = imgFilter.querySelector('#filter-random');
 const discussedButton = imgFilter.querySelector('#filter-discussed');
-const RERENDER_DELAY = 500;
-const MAX_RANDOM_FILTER = 10;
 
-const filterEnum = {
-  DEFAULT: 'default',
-  RANDOM: 'random',
-  DISCUSSED: 'discussed',
-};
+let activeButton = defaultButton;
 
-const filterHandlers = {
-  [filterEnum.DEFAULT]: (data) => data,
-  [filterEnum.RANDOM]: (data) => {
-    const randomData = data.sort(() => Math.random() - 0.5).slice(0, MAX_RANDOM_FILTER);
-    return randomData;
-  },
-  [filterEnum.DISCUSSED]: (data) => [...data].sort((item1, item2) => item2.comments.length - item1.comments.length)
-};
-
-const sortedButtons = (evt) => {
-  const currentActive = filterForm.querySelector('.img-filters__button--active');
-  currentActive.classList.remove('img-filters__button--active');
-  evt.target.classList.add('img-filters__button--active');
+const changeClasses = (button) => {
+  activeButton.classList.remove(ACTIVE_CLASS);
+  button.classList.add(ACTIVE_CLASS);
+  activeButton = button;
 };
 
 const clearContainer = () => {
@@ -36,7 +40,7 @@ const clearContainer = () => {
 };
 
 const reRender = (filter, data) => {
-  const filteredData = filterHandlers[filter](data);
+  const filteredData = FilterHandlers[filter](data);
   clearContainer();
   renderThumbnails(filteredData);
 };
@@ -47,16 +51,19 @@ export const showFilter = (data) => {
   imgFilter.classList.remove('img-filters--inactive');
   filterForm.addEventListener('click', (evt) => {
     const target = evt.target;
-    sortedButtons(evt);
+    if(!target.classList.contains('img-filters__button') || target === activeButton){
+      return;
+    }
+    changeClasses(target);
 
     if (target === defaultButton) {
-      debounceReRender(filterEnum.DEFAULT, data);
+      debounceReRender(FilterEnum.DEFAULT, data);
     }
     if (target === randomButton) {
-      debounceReRender(filterEnum.RANDOM, data);
+      debounceReRender(FilterEnum.RANDOM, data);
     }
     if (target === discussedButton) {
-      debounceReRender(filterEnum.DISCUSSED, data);
+      debounceReRender(FilterEnum.DISCUSSED, data);
     }
   });
 };

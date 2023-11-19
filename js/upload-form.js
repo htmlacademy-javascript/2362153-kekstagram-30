@@ -3,11 +3,10 @@ import { resetScale } from './scale-img';
 import { uploadForm, hashtags, description, pristine, resetValidation, toggleSubmitButton } from './validation';
 import { sendPictures } from './api';
 import { resetEffect } from './slider-effects';
-import { showErrorMessage, showSuccessMessage } from './message';
+import { showErrorMessage, showSuccessMessage } from './messages';
 
 const imgEdit = uploadForm.querySelector('.img-upload__overlay');
 const imgInput = uploadForm.querySelector('.img-upload__input');
-
 
 const closeForm = () => {
   uploadForm.reset();
@@ -27,6 +26,7 @@ const onOpenImgEdit = () => {
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
+
 const isErrorExists = () => Boolean(document.querySelector('.error'));
 
 function onDocumentKeydown(evt) {

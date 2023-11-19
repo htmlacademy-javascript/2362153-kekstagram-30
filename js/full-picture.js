@@ -3,7 +3,6 @@ import { renderComments, bigPicture } from './render-comments';
 const body = document.querySelector('body');
 
 const closeButton = document.querySelector('.big-picture__cancel');
-closeButton.addEventListener('click', onCloseBigPicture);
 
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape') {
@@ -32,5 +31,7 @@ const onOpenBigPicture = (photo) => {
 
   renderComments(photo.comments);
 };
+
+closeButton.addEventListener('click', onCloseBigPicture);
 
 export { onOpenBigPicture };

@@ -1,9 +1,6 @@
 import Pristine from 'pristinejs';
 
-const uploadForm = document.querySelector('.img-upload__form');
-const hashtags = uploadForm.querySelector('.text__hashtags');
-const description = uploadForm.querySelector('.text__description');
-const submitButton = uploadForm.querySelector('.img-upload__submit');
+const REG_EX = /^#[a-zа-яё0-9]{1,19}$/;
 
 const descriptionDefault = {
   MAX_LENGTH: 140,
@@ -26,15 +23,13 @@ const submitButtonCaption = {
   IDLE: 'Опубликовать',
 };
 
-const REG_EX = /^#[a-zа-яё0-9]{1,19}$/;
+const uploadForm = document.querySelector('.img-upload__form');
+const hashtags = uploadForm.querySelector('.text__hashtags');
+const description = uploadForm.querySelector('.text__description');
+const submitButton = uploadForm.querySelector('.img-upload__submit');
+let hashtagsError = '';
 
 const isUniqueArray = (array) => new Set(array).size === array.length;
-
-export const toggleSubmitButton = (isDisabled) => {
-  submitButton.disabled = isDisabled;
-  submitButton.textContent = isDisabled ? submitButtonCaption.SUBMITTING : submitButtonCaption.IDLE;
-};
-
 
 export const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -42,12 +37,6 @@ export const pristine = new Pristine(uploadForm, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'p'
 });
-
-/**
- *
- * @param {string} value
- */
-let hashtagsError = '';
 
 const validateHashtags = (value) => {
   const tags = value.trim().toLowerCase().split(/\s*(?=#)/);
@@ -100,5 +89,10 @@ pristine.addValidator(
 
 const validate = () => pristine.validate();
 const resetValidation = () => pristine.reset();
+
+export const toggleSubmitButton = (isDisabled) => {
+  submitButton.disabled = isDisabled;
+  submitButton.textContent = isDisabled ? submitButtonCaption.SUBMITTING : submitButtonCaption.IDLE;
+};
 
 export { validate, resetValidation, uploadForm, hashtags, description };

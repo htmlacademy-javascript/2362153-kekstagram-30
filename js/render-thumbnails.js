@@ -5,8 +5,6 @@ const template = getTemplate('picture');
 const container = document.querySelector('.pictures');
 
 const createThumbnail = (photo) => {
-  /** @type {HTMLAnchorElement} */
-
   const thumbnail = template.cloneNode(true);
   const img = thumbnail.querySelector('.picture__img');
   img.src = photo.url;
@@ -22,10 +20,6 @@ const createThumbnail = (photo) => {
   return thumbnail;
 };
 
-/**
- *
- * @param {Array} photos
- */
 const renderThumbnails = (photos) => {
   renderFew(photos, container, createThumbnail);
 };
