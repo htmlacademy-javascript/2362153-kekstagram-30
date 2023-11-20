@@ -34,3 +34,7 @@ export const debounce = (callback, timeoutDelay) => {
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
 };
+
+const onKeyDownEscape = (evt) => evt.key === 'Escape';
+
+export { onKeyDownEscape };

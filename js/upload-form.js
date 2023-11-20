@@ -1,9 +1,10 @@
 
-import { resetScale } from './scale-img';
-import { uploadForm, hashtags, description, pristine, resetValidation, toggleSubmitButton } from './validation';
-import { sendPictures } from './api';
-import { resetEffect } from './slider-effects';
-import { showErrorMessage, showSuccessMessage } from './messages';
+import { resetScale } from './scale-img.js';
+import { uploadForm, hashtags, description, pristine, resetValidation, toggleSubmitButton } from './validation.js';
+import { sendPictures } from './api.js';
+import { resetEffect } from './slider-effects.js';
+import { showErrorMessage, showSuccessMessage } from './messages.js';
+import { onKeyDownEscape } from './util.js';
 
 const imgEdit = uploadForm.querySelector('.img-upload__overlay');
 const imgInput = uploadForm.querySelector('.img-upload__input');
@@ -31,7 +32,7 @@ const isErrorExists = () => Boolean(document.querySelector('.error'));
 
 function onDocumentKeydown(evt) {
   if (!(hashtags === document.activeElement || description === document.activeElement)) {
-    if (evt.key === 'Escape' && !isErrorExists()) {
+    if (onKeyDownEscape(evt) && !isErrorExists()) {
       evt.preventDefault();
       closeForm();
     }

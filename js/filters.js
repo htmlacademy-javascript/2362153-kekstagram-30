@@ -13,10 +13,7 @@ const FilterEnum = {
 
 const FilterHandlers = {
   [FilterEnum.DEFAULT]: (data) => data,
-  [FilterEnum.RANDOM]: (data) => {
-    const randomData = data.sort(() => Math.random() - 0.5).slice(0, MAX_RANDOM_FILTER);
-    return randomData;
-  },
+  [FilterEnum.RANDOM]: (data) => data.sort(() => Math.random() - 0.5).slice(0, MAX_RANDOM_FILTER),
   [FilterEnum.DISCUSSED]: (data) => [...data].sort((item1, item2) => item2.comments.length - item1.comments.length)
 };
 
@@ -51,7 +48,7 @@ export const showFilter = (data) => {
   imgFilter.classList.remove('img-filters--inactive');
   filterForm.addEventListener('click', (evt) => {
     const target = evt.target;
-    if(!target.classList.contains('img-filters__button') || target === activeButton){
+    if (!target.classList.contains('img-filters__button') || target === activeButton) {
       return;
     }
     changeClasses(target);

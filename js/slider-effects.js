@@ -1,8 +1,8 @@
-import { img } from './scale-img';
-import { uploadForm } from './validation';
+import { img } from './scale-img.js';
+import { uploadForm } from './validation.js';
 import noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
-import { EFFECT_OPTION } from './effect-map';
+import { EFFECT_OPTION } from './effect-map.js';
 
 const CHANGE_EVENT = new Event('change');
 
