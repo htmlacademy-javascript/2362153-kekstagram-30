@@ -1,6 +1,8 @@
-import { renderFew } from './util';
+import { renderFew } from './util.js';
 
 const PACK_SIZE = 5;
+const AVATAR_WIDTH = 35;
+const AVATAR_HEIGHT = 35;
 
 const bigPicture = document.querySelector('.big-picture');
 const loaderButton = bigPicture.querySelector('.social__comments-loader');
@@ -18,8 +20,8 @@ const createComment = (comment) => {
   avatarOneComment.className = 'social__picture';
   avatarOneComment.src = comment.avatar;
   avatarOneComment.alt = comment.name;
-  avatarOneComment.width = 35;
-  avatarOneComment.height = 35;
+  avatarOneComment.width = AVATAR_WIDTH;
+  avatarOneComment.height = AVATAR_HEIGHT;
 
   const textOneComment = document.createElement('p');
   textOneComment.className = 'social__text';

@@ -1,11 +1,12 @@
-import { renderComments, bigPicture } from './render-comments';
+import { renderComments, bigPicture } from './render-comments.js';
+import { onKeyDownEscape } from './util.js';
 
 const body = document.querySelector('body');
 
 const closeButton = document.querySelector('.big-picture__cancel');
 
 const onDocumentKeydown = (evt) => {
-  if (evt.key === 'Escape') {
+  if (onKeyDownEscape(evt)) {
     evt.preventDefault();
     onCloseBigPicture();
   }

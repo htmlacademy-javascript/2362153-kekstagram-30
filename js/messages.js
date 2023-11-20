@@ -1,3 +1,5 @@
+import { onKeyDownEscape } from './util.js';
+
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
 
@@ -26,7 +28,7 @@ const showMessage = (element, buttonClass) => {
 };
 
 function onDocumentKeydown(evt) {
-  if (evt.key === 'Escape') {
+  if (onKeyDownEscape(evt)) {
     evt.preventDefault();
     hideMessage();
   }

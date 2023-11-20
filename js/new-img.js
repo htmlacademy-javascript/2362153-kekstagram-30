@@ -1,7 +1,7 @@
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const effectsPreview = document.querySelectorAll('.effects__preview');
 
-const isValidType = (file) => {
+export const isValidType = (file) => {
   const fileName = file.name.toLowerCase();
   return FILE_TYPES.some((it) => fileName.endsWith(it));
 };
